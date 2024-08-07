@@ -10,6 +10,30 @@ import { checkSessionIdExists } from '../middlewares/check-session-id-exists'
 export async function mealsRoutes(app: FastifyInstance) {
   app.addHook('preHandler', checkSessionIdExists)
 
+  app.get('/', async (request, reply) => {
+    const { sessionId } = request.cookies
+
+    const meals = await knex('meals')
+      .select(['id', 'name', 'description', 'date_time', 'is_diet'])
+      .where({ session_id: sessionId })
+
+    const mealsParseSchema = z.array(
+      z.object({
+        id: z.string(),
+        name: z.string(),
+        description: z.string(),
+        date_time: z.string(),
+        is_diet: z.number().transform((value) => {
+          return value === 1
+        }),
+      }),
+    )
+
+    const mealsParsed = mealsParseSchema.parse(meals)
+
+    return reply.status(200).send(mealsParsed)
+  })
+
   app.post('/register', async (request, reply) => {
     const createMealsBodySchema = z.object({
       name: z
