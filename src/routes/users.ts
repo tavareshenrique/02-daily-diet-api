@@ -70,9 +70,9 @@ export async function usersRoutes(app: FastifyInstance) {
 
     const { email, password } = userLoginBodySchema.parse(request.body)
 
-    const useEmailExists = await knex('users').where({ email }).first()
+    const user = await knex('users').where({ email }).first()
 
-    if (!useEmailExists) {
+    if (!user) {
       return reply.status(401).send({
         error: {
           user: 'User not found',
@@ -80,7 +80,7 @@ export async function usersRoutes(app: FastifyInstance) {
       })
     }
 
-    if (useEmailExists.password !== password) {
+    if (user.password !== password) {
       return reply.status(401).send({
         error: {
           user: 'User not found',
