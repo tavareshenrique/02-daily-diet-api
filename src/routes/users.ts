@@ -33,6 +33,16 @@ export async function usersRoutes(app: FastifyInstance) {
     try {
       const { name, email, password } = createUserBodySchema.parse(request.body)
 
+      const userAlreadyExists = await knex('users').where({ email }).first()
+
+      if (userAlreadyExists) {
+        return reply.status(409).send({
+          error: {
+            email: 'Email already in use',
+          },
+        })
+      }
+
       await knex('users').insert({
         id: randomUUID(),
         name,
