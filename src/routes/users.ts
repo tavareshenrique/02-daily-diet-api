@@ -62,20 +62,43 @@ export async function usersRoutes(app: FastifyInstance) {
     }
   })
 
-  // app.post('/login', async (request, reply) => {
-  //   const createUserBodySchema = z.object({
-  //     name: z.string(),
-  //     email: z.string().email(),
-  //   })
+  app.post('/login', async (request, reply) => {
+    const userLoginBodySchema = z.object({
+      email: z.string().email(),
+      password: z.string(),
+    })
 
-  //   const { name, email } = createUserBodySchema.parse(request.body)
+    const { email, password } = userLoginBodySchema.parse(request.body)
 
-  //   await knex('users').insert({
-  //     id: randomUUID(),
-  //     name,
-  //     email,
-  //   })
+    const useEmailExists = await knex('users').where({ email }).first()
 
-  //   return reply.status(201).send()
-  // })
+    if (!useEmailExists) {
+      return reply.status(401).send({
+        error: {
+          user: 'User not found',
+        },
+      })
+    }
+
+    if (useEmailExists.password !== password) {
+      return reply.status(401).send({
+        error: {
+          user: 'User not found',
+        },
+      })
+    }
+
+    let sessionId = request.cookies.sessionId
+
+    if (!sessionId) {
+      sessionId = randomUUID()
+
+      reply.setCookie('sessionId', sessionId, {
+        path: '/',
+        maxAge: 60 * 60 * 24 * 7, // 7 days
+      })
+    }
+
+    return reply.status(201).send()
+  })
 }
