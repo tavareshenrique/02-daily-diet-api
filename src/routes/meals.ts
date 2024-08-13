@@ -95,4 +95,71 @@ export async function mealsRoutes(app: FastifyInstance) {
       })
     }
   })
+
+  app.put('/:id', async (request, reply) => {
+    const createMealsBodySchema = z.object({
+      name: z
+        .string({
+          message: 'Name must be at least 2 characters long',
+        })
+        .min(2, {
+          message: 'Name must be at least 2 characters long',
+        }),
+      description: z.string({
+        message: 'Description must be at least 2 characters long',
+      }),
+      date_time: z.coerce.string().datetime({
+        offset: true,
+        message: 'Invalid date_time',
+      }),
+      is_diet: z.boolean({
+        message: 'Invalid is_diet',
+      }),
+    })
+
+    const getMealsParamsSchema = z.object({
+      id: z.string().uuid(),
+    })
+
+    try {
+      const { id } = getMealsParamsSchema.parse(request.params)
+
+      const { name, description, date_time, is_diet } =
+        createMealsBodySchema.parse(request.body)
+
+      const { sessionId } = request.cookies
+
+      const meal = await knex('meals')
+        .where({ session_id: sessionId, id })
+        .update({
+          name,
+          description,
+          date_time,
+          is_diet,
+        })
+        .returning(['id', 'name', 'description', 'date_time', 'is_diet'])
+
+      const mealParseSchema = z.object({
+        id: z.string(),
+        name: z.string(),
+        description: z.string(),
+        date_time: z.string(),
+        is_diet: z.number().transform((value) => {
+          return value === 1
+        }),
+      })
+
+      const mealParsed = mealParseSchema.parse(meal[0])
+
+      return reply.status(200).send(mealParsed)
+    } catch (error) {
+      return reply.status(400).send({
+        error: (error as z.ZodError).errors.map((error: z.ZodIssue) => {
+          return {
+            [error.path[0]]: error.message,
+          }
+        }),
+      })
+    }
+  })
 }
