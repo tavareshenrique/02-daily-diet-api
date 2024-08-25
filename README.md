@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img alt="Daily Diet API" title="Daily Diet API" src="https://raw.githubusercontent.com/tavareshenrique/02-daily-diet-api/5c24f84435d57b9b85fe515d3702261b273c0f4f/assets/logo.svg" width="300px" />
+  <img alt="Daily Diet API" title="Daily Diet API" src="https://raw.githubusercontent.com/tavareshenrique/02-daily-diet-api/676e6ec37c6ae73a623189e072adfe84b657d9a8/assets/logo.svg" width="300px" />
 </h1>
 
 <p align="center">
