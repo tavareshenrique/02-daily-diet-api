@@ -3,11 +3,11 @@
 </h1>
 
 <p align="center">
-  <img alt="Last commit on GitHub" src="https://img.shields.io/github/last-commit/tavareshenrique/02-daily-diet-api?color=74c35f">
+  <img alt="Last commit on GitHub" src="https://img.shields.io/github/last-commit/tavareshenrique/02-ignite-nodejs-daily-diet-api?color=74c35f">
   <img alt="Made by Henrique Tavares" src="https://img.shields.io/badge/made%20by-Henrique Tavares-%20?color=74c35f">
-  <img alt="Project top programing language" src="https://img.shields.io/github/languages/top/tavareshenrique/02-daily-diet-api?color=74c35f">
-  <img alt="Repository size" src="https://img.shields.io/github/repo-size/tavareshenrique/02-daily-diet-api?color=74c35f">
-  <img alt="GitHub license" src="https://img.shields.io/github/license/tavareshenrique/02-daily-diet-api?color=74c35f">
+  <img alt="Project top programing language" src="https://img.shields.io/github/languages/top/tavareshenrique/02-ignite-nodejs-daily-diet-api?color=74c35f">
+  <img alt="Repository size" src="https://img.shields.io/github/repo-size/tavareshenrique/02-ignite-nodejs-daily-diet-api?color=74c35f">
+  <img alt="GitHub license" src="https://img.shields.io/github/license/tavareshenrique/02-ignite-nodejs-daily-diet-api?color=74c35f">
 </p>
 
 <p align="center">
