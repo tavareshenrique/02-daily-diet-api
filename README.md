@@ -32,7 +32,7 @@
 > **1.0.** Clone o Repositório:
 
 ```bash
-git clone https://github.com/tavareshenrique/02-daily-diet-api.git
+git clone https://github.com/tavareshenrique/02-ignite-nodejs-daily-diet-api.git
 ```
 
 > **1.1.** Instale as dependências:
